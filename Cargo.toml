@@ -4,6 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "contador"
+path = "src/idle_game/main.rs"
+
+[[bin]]
+name = "idle_game"
+path = "src/contador/main.rs"
 
 [dependencies]
 rand = "0.8"
