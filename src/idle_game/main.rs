@@ -5,6 +5,8 @@ use std::thread;
 use std::time::Duration;
 use wood::Wood;
 mod wood;
+use gold::Gold;
+mod gold;
 
 fn main() {
 
@@ -13,7 +15,7 @@ fn main() {
     const PRICE_WOOD:f64 = 50.0;
     const SLEEP_TIME:u64 = 3;
 
-    let gold_lock = Arc::new(RwLock::new(INITIAL_GOLD));
+    let gold_lock = Arc::new(RwLock::new(Gold::new(INITIAL_GOLD)));
     let wood_lock = Arc::new(RwLock::new(Wood::new(INITIAL_WOOD, PRICE_WOOD)));
 
     let gold_generate = gold_lock.clone();
@@ -25,7 +27,7 @@ fn main() {
     let thread_handle_info = thread::spawn(move||loop {
         println!("==========Information=========");
         if let Ok(mut _gold) = gold_info.read() {
-            println!("Gold: {} ",*_gold);
+            println!("Gold: {} ",_gold.getAmount());
         }
         if let Ok(mut _wood) = wood_info.read() {
             println!("Wood: {} ",_wood.getAmount());
@@ -38,8 +40,7 @@ fn main() {
     let thread_handle_generate_gold = thread::spawn(move || loop {
         println!("Start Generate Gold");
         if let Ok(mut _gold) = gold_generate.write() {
-            let percentage :f64 = rand::thread_rng().gen();
-            *_gold = *_gold + (percentage * (*_gold));
+            _gold.generate();
         }
         println!("Finish Generate Gold");
         println!();
@@ -50,10 +51,7 @@ fn main() {
         println!("Start Exchange");
         if let Ok(mut _gold) = gold_exchange.write() {
             if let Ok(mut _wood) = wood_exchange.write() {
-                if *_gold > PRICE_WOOD {
-                    *_gold = *_gold - _wood.getPrice();
-                    _wood.addWood(1);
-                }
+                _gold.exchangeWood(_wood);
             }
         }
         println!("Finish Exchange");
