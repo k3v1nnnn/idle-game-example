@@ -5,11 +5,15 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]
-name = "contador"
+name = "idle_game"
 path = "src/idle_game/main.rs"
 
 [[bin]]
-name = "idle_game"
+name = "secuencia"
+path = "src/secuencia/main.rs"
+
+[[bin]]
+name = "contador"
 path = "src/contador/main.rs"
 
 [dependencies]
