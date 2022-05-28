@@ -1,6 +1,6 @@
 use std::sync::RwLockWriteGuard;
 use rand::Rng;
-use crate::Wood;
+use crate::{Resource, Wood};
 
 pub struct Gold {
     amount: f64
@@ -28,7 +28,7 @@ impl Gold{
         let woodPrice = wood.getPrice();
         if self.amount > woodPrice {
             self.amount = self.amount - woodPrice;
-            wood.addWood(1);
+            wood.add(1);
         }
     }
 }

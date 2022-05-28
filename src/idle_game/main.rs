@@ -7,8 +7,11 @@ use wood::Wood;
 mod wood;
 use gold::Gold;
 mod gold;
+use resource::Resource;
+mod resource;
 
-fn main() {
+fn main()
+{
 
     const INITIAL_GOLD: f64 = 100.0;
     const INITIAL_WOOD: u32 = 0;
