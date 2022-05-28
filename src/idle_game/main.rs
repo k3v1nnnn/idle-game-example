@@ -3,6 +3,8 @@ use std::sync::{Arc, RwLock};
 use rand::Rng;
 use std::thread;
 use std::time::Duration;
+use wood::Wood;
+mod wood;
 
 fn main() {
 
@@ -12,7 +14,7 @@ fn main() {
     const SLEEP_TIME:u64 = 3;
 
     let gold_lock = Arc::new(RwLock::new(INITIAL_GOLD));
-    let wood_lock = Arc::new(RwLock::new(INITIAL_WOOD));
+    let wood_lock = Arc::new(RwLock::new(Wood::new(INITIAL_WOOD, PRICE_WOOD)));
 
     let gold_generate = gold_lock.clone();
     let gold_info = gold_lock.clone();
@@ -26,7 +28,7 @@ fn main() {
             println!("Gold: {} ",*_gold);
         }
         if let Ok(mut _wood) = wood_info.read() {
-            println!("Wood: {} ",*_wood);
+            println!("Wood: {} ",_wood.getAmount());
         }
         println!("==============================");
         println!();
@@ -49,8 +51,8 @@ fn main() {
         if let Ok(mut _gold) = gold_exchange.write() {
             if let Ok(mut _wood) = wood_exchange.write() {
                 if *_gold > PRICE_WOOD {
-                    *_gold = *_gold - PRICE_WOOD;
-                    *_wood = *_wood + 1;
+                    *_gold = *_gold - _wood.getPrice();
+                    _wood.addWood(1);
                 }
             }
         }
