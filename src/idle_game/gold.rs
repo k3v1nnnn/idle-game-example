@@ -5,8 +5,8 @@ use crate::{Resource, Wood};
 pub struct Gold {
     amount: f64
 }
-impl Gold{
-
+impl Gold
+{
     pub fn new(amount: f64) -> Self
     {
         Self {amount}
@@ -19,16 +19,16 @@ impl Gold{
 
     pub fn generate(&mut self)
     {
-        let percentage :f64 = rand::thread_rng().gen();
-        self.amount = self.amount + (percentage * self.amount);
+        let amount_generate:f64 = rand::thread_rng().gen();
+        self.amount = self.amount + (amount_generate * 100.0).round();
     }
 
-    pub fn exchangeWood(&mut self, mut wood: RwLockWriteGuard<Wood>)
+    pub fn exchange(&mut self, mut resource: RwLockWriteGuard<Resource>)
     {
-        let woodPrice = wood.getPrice();
-        if self.amount > woodPrice {
-            self.amount = self.amount - woodPrice;
-            wood.add(1);
+        let resource_price = resource.getPrice();
+        if self.amount > resource_price {
+            self.amount = self.amount - resource_price;
+            resource.add(1);
         }
     }
 }

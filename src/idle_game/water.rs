@@ -1,20 +1,18 @@
-use crate::Resource;
-
-pub struct Wood {
+pub struct Water {
     amount: u32,
     price: f64
 }
 
-impl Wood
+impl Water
 {
     pub fn new(amount: u32, price: f64) -> Self
     {
         Self {amount, price }
     }
 
-    pub fn add(&mut self, wood: u32)
+    pub fn add(&mut self, water: u32)
     {
-        self.amount = self.amount + wood;
+        self.amount = self.amount + water;
     }
 
     pub fn getPrice(&self) -> f64
