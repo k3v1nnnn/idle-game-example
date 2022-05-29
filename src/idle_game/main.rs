@@ -66,7 +66,9 @@ fn main()
 
     let thread_handle_generate_gold = thread::spawn(move || loop {
         println!("Start Generate Gold");
-        if let Ok(mut _gold) = gold_generate.write() {
+        let gold = gold_generate.write();
+        if gold.is_ok() {
+            let mut _gold = gold.unwrap();
             _gold.generate();
         }
         println!("Finish Generate Gold");
