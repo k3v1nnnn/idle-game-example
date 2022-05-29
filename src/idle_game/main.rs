@@ -76,14 +76,18 @@ fn main()
 
     let thread_handle_exchange = thread::spawn(move||loop {
         println!("Start Exchange");
-        if let Ok(mut _resources) = resources_exchange.read() {
+        let resources = resources_exchange.read();
+        if resources.is_ok()  {
+            let _resources = resources.unwrap();
             let item = rand::thread_rng().gen_range(0.._resources.len());
             println!("Exchange Item {}", item);
-            let _resource = &*_resources[item];
-            if let Ok(mut _gold) = gold_exchange.write() {
-                if let Ok(mut __resource) = _resource.write() {
-                    _gold.exchange(__resource);
-                }
+            let chosen_resource = &*_resources[item];
+            let gold = gold_exchange.write();
+            let _chosen_resource = chosen_resource.write();
+            if gold.is_ok() && _chosen_resource.is_ok() {
+                let mut _gold = gold.unwrap();
+                let mut __chosen_resource = _chosen_resource.unwrap();
+                _gold.exchange(__chosen_resource);
             }
         }
         println!("Finish Exchange");
