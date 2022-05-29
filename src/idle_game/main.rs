@@ -20,11 +20,14 @@ fn main()
     const PRICE_WOOD:f64 = 50.0;
     const INITIAL_WATER: u32 = 0;
     const PRICE_WATER: f64 = 80.0;
+    const INITIAL_FOOD: u32 = 0;
+    const PRICE_FOOD: f64 = 120.0;
     const SLEEP_TIME:u64 = 3;
 
     let gold_lock = Arc::new(RwLock::new(Gold::new(INITIAL_GOLD)));
     let wood_lock = Arc::new(RwLock::new(Resource::new(INITIAL_WOOD, PRICE_WOOD)));
     let water_lock = Arc::new(RwLock::new(Resource::new(INITIAL_WATER, PRICE_WATER)));
+    let food_lock = Arc::new(RwLock::new(Resource::new(INITIAL_FOOD, PRICE_FOOD)));
 
     let gold_generate = gold_lock.clone();
     let gold_info = gold_lock.clone();
@@ -33,8 +36,10 @@ fn main()
     let wood_exchange = wood_lock.clone();
     let water_info = water_lock.clone();
     let water_exchange = water_lock.clone();
+    let food_info = food_lock.clone();
+    let food_exchange = food_lock.clone();
 
-    let resources_lock = Arc::new(RwLock::new(vec![water_exchange, wood_exchange]));
+    let resources_lock = Arc::new(RwLock::new(vec![water_exchange, wood_exchange, food_exchange]));
     let resources_exchange = resources_lock.clone();
 
 
@@ -50,6 +55,9 @@ fn main()
         }
         if let Ok(mut _water) = water_info.read() {
             println!("Water: {} ",_water.getAmount());
+        }
+        if let Ok(mut _food) = food_info.read() {
+            println!("Food: {} ",_food.getAmount());
         }
         println!("==============================");
         println!();
@@ -69,7 +77,7 @@ fn main()
     let thread_handle_exchange = thread::spawn(move||loop {
         println!("Start Exchange");
         if let Ok(mut _resources) = resources_exchange.read() {
-            let item = rand::thread_rng().gen_range(0..2);
+            let item = rand::thread_rng().gen_range(0.._resources.len());
             println!("Exchange Item {}", item);
             let _resource = &*_resources[item];
             if let Ok(mut _gold) = gold_exchange.write() {
