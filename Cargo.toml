@@ -16,5 +16,10 @@ path = "src/secuencia/main.rs"
 name = "contador"
 path = "src/contador/main.rs"
 
+[[bin]]
+name = "productor_consumidor"
+path = "src/productor_consumidor/main.rs"
+
 [dependencies]
 rand = "0.8"
+std-semaphore = "0.1.0"
