@@ -4,7 +4,7 @@ use std::time::Duration;
 use std_semaphore::Semaphore;
 
 fn main() {
-    const SLEEP_TIME:u64 = 5;
+    const SLEEP_TIME:u64 = 1;
     let semaphore = Arc::new(Semaphore::new(1));
     let semaphore_full = Arc::new(Semaphore::new(0));
     let semaphore_empty = Arc::new(Semaphore::new(5));
@@ -19,6 +19,7 @@ fn main() {
         semaphore_empty_producer.acquire();
         semaphore_producer.acquire();
         println!("==========Producer=========");
+        thread::sleep(Duration::from_secs(SLEEP_TIME));
         let mut count = a_buffer_producer.lock().unwrap();
         *count = *count + 1;
         println!(" Count {} ", *count);
@@ -35,6 +36,7 @@ fn main() {
         semaphore_full_consumer.acquire();
         semaphore_consumer.acquire();
         println!("==========Consumer=========");
+        thread::sleep(Duration::from_secs(SLEEP_TIME));
         let mut count = a_buffer_consumer.lock().unwrap();
         *count = *count - 1;
         println!(" Count {} ", *count);
