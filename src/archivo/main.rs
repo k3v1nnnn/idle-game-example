@@ -1,13 +1,16 @@
-use std::fs::{File, OpenOptions};
-use std::io::Write;
+use std::fs::{File};
+use std::io::{BufRead, BufReader};
 
 fn main() {
-    let mut file = std::fs::File::create("src/archivo/data.txt").expect("create failed");
-    file.write_all("Hello World2".as_bytes()).expect("write failed");
-    file.write_all("\nTutorialsPoint2".as_bytes()).expect("write failed");
-    println!("data written to file" );
-    let mut file = OpenOptions::new().append(true).open("src/archivo/data2.txt");
-    if file.is_ok(){
-        println!("data written to file2" );
+    let file = File::open("src/archivo/data.csv").unwrap();
+    let reader = BufReader::new(file);
+    for line in reader.lines() {
+        let line = line.unwrap();
+        let line_split = line.split(",");
+        let vec: Vec<&str> = line_split.collect();
+        println!("data: {} is empty: {}", vec[0],vec[0].is_empty());
+        println!("data: {} is empty: {}", vec[1],vec[1].is_empty());
+        println!("data: {} is empty: {}", vec[2],vec[2].is_empty());
+        println!("data: {} is empty: {}", vec[3],vec[3].is_empty());
     }
 }
