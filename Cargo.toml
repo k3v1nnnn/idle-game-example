@@ -24,6 +24,14 @@ path = "src/productor_consumidor/main.rs"
 name = "archivo"
 path = "src/archivo/main.rs"
 
+[[bin]]
+name = "servidor"
+path = "src/cliente_servidor/servidor.rs"
+
+[[bin]]
+name = "cliente"
+path = "src/cliente_servidor/cliente.rs"
+
 [dependencies]
 rand = "0.8"
 std-semaphore = "0.1.0"
