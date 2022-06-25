@@ -32,6 +32,15 @@ path = "src/cliente_servidor/servidor.rs"
 name = "cliente"
 path = "src/cliente_servidor/cliente.rs"
 
+
+[[bin]]
+name = "coordinator"
+path = "src/transacciones/coordinator.rs"
+
+[[bin]]
+name = "stakeholder"
+path = "src/transacciones/stakeholder.rs"
+
 [dependencies]
 rand = "0.8"
 std-semaphore = "0.1.0"
