@@ -29,6 +29,14 @@ name = "servidor"
 path = "src/cliente_servidor/servidor.rs"
 
 [[bin]]
+name = "cliente_udp"
+path = "src/cliente_servidor/cliente_udp.rs"
+
+[[bin]]
+name = "servidor_udp"
+path = "src/cliente_servidor/servidor_udp.rs"
+
+[[bin]]
 name = "cliente"
 path = "src/cliente_servidor/cliente.rs"
 

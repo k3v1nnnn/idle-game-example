@@ -26,11 +26,12 @@ impl Coordinator {
         let mut stakeholders_ports = HashMap::new();
         stakeholders_ports.insert(Stakeholder::BANK, ":11111".to_string());
         let stakeholders = vec![Stakeholder::BANK];
-        Coordinator {ip, port, stakeholders_ports, stakeholders}
+        Coordinator {ip, ports, response_ports, stakeholders}
     }
 
-    fn parse_response(buffer: String) {
-        
+    fn connections(&mut self) -> Vec<JoinHandle<()>> {
+        let mut handlers = vec![];
+
     }
 
     fn responses(&mut self) -> Vec<JoinHandle<()>> {
